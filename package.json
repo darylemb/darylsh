@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.6.1",
+    "@fontsource-variable/roboto-mono": "^5.2.8",
     "astro": "^5.16.7"
   }
 }
