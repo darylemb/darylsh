@@ -2,8 +2,19 @@
 
 ---
 
-<script is:inline>
-	const userLang = navigator.language || navigator.userLanguage;
-	const isSpanish = userLang.toLowerCase().startsWith("es");
-	window.location.pathname = isSpanish ? `/es/` : `/en/`;
-</script>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Redirecting...</title>
+		<noscript>
+			<meta http-equiv="refresh" content="0;url=/en/" />
+		</noscript>
+		<script is:inline>
+			const userLang = navigator.language || navigator.userLanguage;
+			const isSpanish = userLang.toLowerCase().startsWith("es");
+			window.location.href = isSpanish ? "/es/" : "/en/";
+		</script>
+	</head>
+	<body> </body>
+</html>
