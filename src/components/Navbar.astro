@@ -18,18 +18,44 @@ const currentPath = Astro.url.pathname.replace(/^\/(es|en)\/?/, "");
 const toggleHref = getRelativeLocaleUrl(toggleLang, currentPath);
 ---
 
-<nav class="glass">
+<nav class="glass" id="main-nav">
     <div class="container">
         <a href={getRelativeLocaleUrl(lang, "")} class="logo">Daryl</a>
-        <div class="links">
+
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <div class="links" id="nav-links">
             {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-            <a href={toggleHref} class="lang-toggle">{toggleLabel}</a>
-            <a href={getRelativeLocaleUrl(lang, "contact")} class="btn"
-                >{t("nav.contact")}</a
-            >
+            <div class="nav-extra">
+                <a href={toggleHref} class="lang-toggle">{toggleLabel}</a>
+                <a href={getRelativeLocaleUrl(lang, "contact")} class="btn"
+                    >{t("nav.contact")}</a
+                >
+            </div>
         </div>
     </div>
 </nav>
+
+<script>
+    const nav = document.getElementById("main-nav");
+    const toggle = document.getElementById("menu-toggle");
+    const links = document.querySelectorAll(".links a");
+
+    toggle?.addEventListener("click", () => {
+        nav?.classList.toggle("nav-open");
+    });
+
+    // Close menu when a link is clicked
+    links.forEach((link) => {
+        link.addEventListener("click", () => {
+            nav?.classList.remove("nav-open");
+        });
+    });
+</script>
 
 <style>
     nav {
@@ -39,9 +65,10 @@ const toggleHref = getRelativeLocaleUrl(toggleLang, currentPath);
         transform: translateX(-50%);
         width: 90%;
         max-width: 1200px;
-        z-index: 100;
+        z-index: 1000;
         border-radius: 99rem;
         padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
     }
 
     .container {
@@ -51,7 +78,7 @@ const toggleHref = getRelativeLocaleUrl(toggleLang, currentPath);
     }
 
     .logo {
-        font-family: "Roboto Mono", monospace;
+        font-family: "Roboto Mono Variable", monospace;
         font-weight: 700;
         font-size: 1.5rem;
         background: linear-gradient(
@@ -61,12 +88,19 @@ const toggleHref = getRelativeLocaleUrl(toggleLang, currentPath);
         );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        z-index: 1001;
     }
 
     .links {
         display: flex;
         gap: 2rem;
         align-items: center;
+    }
+
+    .nav-extra {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
     }
 
     .links a {
@@ -97,9 +131,94 @@ const toggleHref = getRelativeLocaleUrl(toggleLang, currentPath);
         font-weight: 600 !important;
     }
 
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        z-index: 1001;
+    }
+
+    .bar {
+        width: 24px;
+        height: 2px;
+        background: var(--text-primary);
+        transition: all 0.3s ease;
+        border-radius: 2px;
+    }
+
     @media (max-width: 768px) {
+        nav {
+            border-radius: 2rem;
+        }
+
+        nav.nav-open {
+            border-radius: 1.5rem;
+        }
+
+        .nav-open .container {
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .menu-toggle {
+            display: flex;
+            order: 2;
+        }
+
+        .logo {
+            order: 1;
+        }
+
+        .nav-open .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .nav-open .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .nav-open .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
         .links {
             display: none;
+            width: 100%;
+            flex-direction: column;
+            padding-top: 1.5rem;
+            gap: 1.25rem;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            order: 3;
+        }
+
+        .nav-open .links {
+            display: flex;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .nav-extra {
+            flex-direction: column;
+            width: 100%;
+            gap: 1.25rem;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
     }
 </style>
