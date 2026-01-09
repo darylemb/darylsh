@@ -1,0 +1,169 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="github-stats container">
+    <div class="glass card">
+        <div class="header">
+            <div class="user-info">
+                <img
+                    src="https://github.com/darylemb.png"
+                    alt="Github Profile"
+                    class="avatar"
+                />
+                <div>
+                    <h3>github.com/darylemb</h3>
+                    <p id="github-bio">DevOps Engineer / SRE</p>
+                </div>
+            </div>
+            <a
+                href="https://github.com/darylemb"
+                target="_blank"
+                class="btn-github">Follow</a
+            >
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="value" id="repo-count">--</span>
+                <span class="label"
+                    >{lang === "es" ? "Repositorios" : "Repositories"}</span
+                >
+            </div>
+            <div class="stat-item">
+                <span class="value" id="follower-count">--</span>
+                <span class="label"
+                    >{lang === "es" ? "Seguidores" : "Followers"}</span
+                >
+            </div>
+            <div class="stat-item">
+                <span class="value" id="gists-count">--</span>
+                <span class="label">Gists</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    async function fetchGithubData() {
+        try {
+            const response = await fetch(
+                "https://api.github.com/users/darylemb",
+            );
+            const data = await response.json();
+
+            if (data) {
+                const repoEl = document.getElementById("repo-count");
+                const followerEl = document.getElementById("follower-count");
+                const gistsEl = document.getElementById("gists-count");
+                const bioEl = document.getElementById("github-bio");
+
+                if (repoEl) repoEl.innerText = data.public_repos;
+                if (followerEl) followerEl.innerText = data.followers;
+                if (gistsEl) gistsEl.innerText = data.public_gists;
+                if (data.bio && bioEl) bioEl.innerText = data.bio;
+            }
+        } catch (error) {
+            console.error("Error fetching GitHub data:", error);
+        }
+    }
+
+    fetchGithubData();
+</script>
+
+<style>
+    .github-stats {
+        padding: 40px 2rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .card {
+        padding: 2.5rem;
+        border-radius: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 2px solid var(--accent-primary);
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+    #github-bio {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+    .btn-github {
+        background: #24292e;
+        color: white;
+        padding: 0.6rem 1.25rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        background: var(--glass-border);
+        border-radius: 1.5rem;
+    }
+
+    .value {
+        font-size: 2rem;
+        font-weight: 700;
+        font-family: "Roboto Mono", monospace;
+        color: var(--accent-primary);
+    }
+
+    .label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 640px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

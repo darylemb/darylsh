@@ -1,0 +1,20 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import ProjectsGrid from "../../components/Projects.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+export function getStaticPaths() {
+    return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t("nav.projects")} | Daryl`}>
+    <Navbar />
+    <main style="padding-top: 100px;">
+        <ProjectsGrid />
+    </main>
+</Layout>

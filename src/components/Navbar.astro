@@ -1,0 +1,105 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const navLinks = [
+    { href: getRelativeLocaleUrl(lang, "about"), label: t("nav.about") },
+    { href: getRelativeLocaleUrl(lang, "projects"), label: t("nav.projects") },
+    { href: getRelativeLocaleUrl(lang, "resume"), label: t("nav.resume") },
+    { href: getRelativeLocaleUrl(lang, "blog"), label: t("nav.blog") },
+];
+
+const toggleLang = lang === "es" ? "en" : "es";
+const toggleLabel = lang === "es" ? "EN" : "ES";
+const currentPath = Astro.url.pathname.replace(/^\/(es|en)\/?/, "");
+const toggleHref = getRelativeLocaleUrl(toggleLang, currentPath);
+---
+
+<nav class="glass">
+    <div class="container">
+        <a href={getRelativeLocaleUrl(lang, "")} class="logo">Daryl</a>
+        <div class="links">
+            {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+            <a href={toggleHref} class="lang-toggle">{toggleLabel}</a>
+            <a href={getRelativeLocaleUrl(lang, "contact")} class="btn"
+                >{t("nav.contact")}</a
+            >
+        </div>
+    </div>
+</nav>
+
+<style>
+    nav {
+        position: fixed;
+        top: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 1200px;
+        z-index: 100;
+        border-radius: 99rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-family: "Roboto Mono", monospace;
+        font-weight: 700;
+        font-size: 1.5rem;
+        background: linear-gradient(
+            135deg,
+            var(--accent-primary),
+            var(--accent-secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .links a {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: color 0.2s;
+    }
+
+    .links a:hover {
+        color: var(--text-primary);
+    }
+
+    .lang-toggle {
+        background: var(--glass-border);
+        padding: 0.25rem 0.6rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        color: var(--text-primary) !important;
+    }
+
+    .btn {
+        background: var(--text-primary);
+        color: var(--bg-primary) !important;
+        padding: 0.5rem 1.25rem;
+        border-radius: 99rem;
+        font-weight: 600 !important;
+    }
+
+    @media (max-width: 768px) {
+        .links {
+            display: none;
+        }
+    }
+</style>

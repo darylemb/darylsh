@@ -1,0 +1,122 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="hero" class="container">
+    <div class="content">
+        <span class="badge glass">{t("hero.badge")}</span>
+        <h1>{t("hero.title")}<span class="gradient-text">Daryl</span></h1>
+        <h2>{t("hero.subtitle")}</h2>
+        <p>{t("hero.description")}</p>
+        <div class="actions">
+            <a href={`/${lang}/projects`} class="btn-primary"
+                >{t("hero.cta_projects")}</a
+            >
+            <a href={`/${lang}/about`} class="btn-secondary"
+                >{t("hero.cta_more")}</a
+            >
+        </div>
+    </div>
+</section>
+
+<style>
+    #hero {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        padding-top: 120px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .content {
+        max-width: 800px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--accent-primary);
+        margin-bottom: 2rem;
+    }
+
+    h1 {
+        font-size: clamp(3rem, 8vw, 5rem);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+    }
+
+    .gradient-text {
+        background: linear-gradient(
+            135deg,
+            var(--accent-primary),
+            var(--accent-secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+
+    p {
+        font-size: clamp(1.1rem, 2vw, 1.25rem);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 3rem;
+        max-width: 600px;
+    }
+
+    .actions {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(
+            135deg,
+            var(--accent-primary),
+            var(--accent-secondary)
+        );
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover {
+        opacity: 0.9;
+    }
+
+    .btn-secondary {
+        border: 1px solid var(--glass-border);
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        transition: background 0.2s;
+    }
+
+    .btn-secondary:hover {
+        background: var(--glass-bg);
+    }
+
+    @media (max-width: 768px) {
+        .actions {
+            flex-direction: column;
+        }
+    }
+</style>

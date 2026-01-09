@@ -1,0 +1,214 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const experience = [
+    {
+        company: "Grid Dynamics",
+        role: "DevOps Engineer",
+        period: "09 2022 - Present",
+        highlights:
+            lang === "es"
+                ? [
+                      "Gestión de infraestructura cloud (GCP, AWS y Azure).",
+                      "Trabajé con Kubernetes en diseño y gestión de clusters, diseño de arquitectura y despliegue.",
+                      "Solución de problemas en clusters de Kubernetes (EKS, AKS y GKE).",
+                      "Migración de clusters de Kubernetes (on-premise a AKS, EKS a AKS, GKE a AKS, etc.)",
+                  ]
+                : [
+                      "Managed cloud infrastructure (GCP, AWS and Azure).",
+                      "Worked with Kubernetes on cluster design and management, architecture design and deployment.",
+                      "Troubleshooting in Kubernetes clusters (EKS, AKS and GKE).",
+                      "Kubernetes cluster migration (on-premise to AKS, EKS to AKS, GKE to AKS, etc.)",
+                  ],
+    },
+    {
+        company: "Globant",
+        role: "DevOps Engineer",
+        period: "02 2022 - 09 2022",
+        highlights:
+            lang === "es"
+                ? [
+                      "Diseño de arquitectura cloud (Azure Resource Manager y Terraform).",
+                      "Despliegue de infraestructura cloud (AKS y GKE).",
+                      "Desarrollo de pipelines CI/CD en Jenkins y Azure DevOps.",
+                  ]
+                : [
+                      "Designed cloud architecture (Azure Resource Manager and Terraform).",
+                      "Deployed cloud infrastructure (AKS and GKE).",
+                      "Developed CI/CD pipelines in Jenkins and Azure DevOps.",
+                  ],
+    },
+];
+
+const skills = [
+    "AWS, GCP, Azure",
+    "Kubernetes, Docker, Terraform",
+    "Jenkins, Github Actions, Azure DevOps",
+    "Python, Java, Bash",
+    "Prometheus, Ansible, Argo CD",
+];
+
+const certifications = [
+    "CNCF: Certified Kubernetes Administrator (CKA)",
+    "HashiCorp Certified: Terraform Associate",
+    "Google Cloud Certified: Associate Cloud Engineer",
+];
+---
+
+<Layout title={`${t("nav.resume")} | Daryl`}>
+    <Navbar />
+    <main class="container">
+        <header>
+            <h1>{t("resume.title")}</h1>
+            <a href="#" class="btn-download">{t("resume.download")}</a>
+        </header>
+
+        <div class="grid">
+            <section class="experience">
+                {
+                    experience.map((exp) => (
+                        <div class="exp-item glass">
+                            <span class="period">{exp.period}</span>
+                            <h3>
+                                {exp.role} @ {exp.company}
+                            </h3>
+                            <ul>
+                                {exp.highlights.map((h) => (
+                                    <li>{h}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))
+                }
+            </section>
+
+            <aside>
+                <div class="skill-box glass">
+                    <h3>{t("resume.skills")}</h3>
+                    <div class="tags">
+                        {skills.map((s) => <span class="tag">{s}</span>)}
+                    </div>
+                </div>
+
+                <div class="skill-box glass">
+                    <h3>{t("resume.certifications")}</h3>
+                    <ul>
+                        {certifications.map((c) => <li>{c}</li>)}
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 120px 2rem;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4rem;
+    }
+
+    h1 {
+        font-size: 3rem;
+        background: linear-gradient(
+            135deg,
+            var(--accent-primary),
+            var(--accent-secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .btn-download {
+        background: var(--text-primary);
+        color: var(--bg-primary);
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 3rem;
+    }
+
+    .exp-item {
+        padding: 2rem;
+        border-radius: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .period {
+        color: var(--accent-primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    h3 {
+        margin: 0.5rem 0 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    ul {
+        list-style: none;
+        color: var(--text-secondary);
+    }
+
+    li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 0.75rem;
+        line-height: 1.6;
+    }
+
+    li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent-primary);
+    }
+
+    aside {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .skill-box {
+        padding: 2rem;
+        border-radius: 1.5rem;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .tag {
+        background: var(--glass-border);
+        padding: 0.4rem 0.8rem;
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    @media (max-width: 968px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

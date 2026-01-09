@@ -1,0 +1,104 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t("construction.title")} | Daryl`}>
+    <Navbar />
+    <main class="container">
+        <div class="glass card">
+            <div class="icon">🚧</div>
+            <h1>{t("construction.title")}</h1>
+            <p>{t("construction.description")}</p>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <a href={`/${lang}/`} class="btn">{t("404.back")}</a>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .container {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .card {
+        padding: 4rem;
+        border-radius: 2rem;
+        text-align: center;
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(
+            135deg,
+            var(--accent-primary),
+            var(--accent-secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    p {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: var(--glass-border);
+        border-radius: 4px;
+        margin-bottom: 2.5rem;
+        overflow: hidden;
+    }
+
+    .progress {
+        width: 65%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            var(--accent-primary),
+            var(--accent-secondary)
+        );
+        animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+        0% {
+            opacity: 0.6;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0.6;
+        }
+    }
+
+    .btn {
+        background: var(--text-primary);
+        color: var(--bg-primary);
+        padding: 0.75rem 2rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+</style>

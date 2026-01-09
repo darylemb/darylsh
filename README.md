@@ -1,46 +1,57 @@
-# Astro Starter Kit: Basics
+# 👨‍💻 Daryl Mendoza | DevOps Engineer / SRE Portfolio
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+This is my professional portfolio, built with **Astro 5.0** and designed to showcase my experience in infrastructure automation, Site Reliability Engineering (SRE), and cloud architectures.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🚀 Key Features
 
-## 🚀 Project Structure
+- **🌎 Native Bilingual Support**: Implemented using Astro's official i18n system, supporting English and Spanish with automatic browser language detection.
+- **📊 GitHub Integration**: Real-time fetching of profile metrics (repositories, followers, gists) via the GitHub API.
+- **📝 Technical Blog**: Content system managed through Astro `Content Collections` to share articles about DevOps and infrastructure.
+- **✨ Premium Design**: Modern "Glassmorphism" aesthetic with **Roboto Mono** typography for a technical and professional (DevOps-focused) look.
+- **⚡ Peak Performance**: Static Site Generation (SSG) for instant load times and SEO optimization.
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🛠️ Tech Stack
+
+- **Core**: [Astro 5.16.7+](https://astro.build/)
+- **Language**: TypeScript
+- **Styling**: Vanilla CSS with a design system based on CSS variables and blur effects.
+- **Fonts**: Roboto Mono (via Google Fonts).
+- **Deployment**: Optimized for [Cloudflare Pages](https://pages.cloudflare.com/).
+
+## 📁 Project Structure
 
 ```text
 /
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+├── src/
+│   ├── components/     # Visual components (Hero, Navbar, TechStack, etc.)
+│   ├── content/        # Markdown for the Technical Blog (EN/ES)
+│   ├── i18n/           # Translation dictionaries and utilities
+│   ├── layouts/        # Base layout with the global design system
+│   └── pages/
+│       ├── [lang]/     # Dynamic routes for bilingual support
+│       └── 404.astro   # Custom error page
+├── public/             # Static assets (favicon.svg, robots.txt)
+└── astro.config.mjs    # i18n configuration and plugins
 ```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+All commands are run from the project's root:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| Command | Action |
+| :--- | :--- |
+| `pnpm install` | Installs necessary dependencies. |
+| `pnpm dev` | Starts the local dev server at `localhost:4321`. |
+| `pnpm build` | Builds the static site to the `./dist/` folder. |
+| `pnpm preview` | Previews the build locally. |
 
-## 👀 Want to learn more?
+## 🌐 i18n Configuration
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The site uses a dynamic routing architecture. To add a new language:
+1. Add the locale to `astro.config.mjs`.
+2. Add the translations to `src/i18n/ui.ts`.
+3. Astro will automatically generate the new routes during the build process.
+
+## 📄 License
+
+This project is licensed under the MIT License. Feel free to use it as a base for your own portfolio!

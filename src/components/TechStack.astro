@@ -1,0 +1,136 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const stack = [
+    {
+        category: lang === "es" ? "Cloud & Infraestructura" : "Cloud & Infra",
+        tools: [
+            { name: "AWS", icon: "☁️" },
+            { name: "GCP", icon: "🌐" },
+            { name: "Azure", icon: "🔷" },
+            { name: "Terraform", icon: "🏗️" },
+            { name: "Kubernetes", icon: "☸️" },
+        ],
+    },
+    {
+        category: "CI/CD & Automation",
+        tools: [
+            { name: "Jenkins", icon: "👷" },
+            { name: "GH Actions", icon: "🚀" },
+            { name: "ArgoCD", icon: "🐙" },
+            { name: "Ansible", icon: "📜" },
+        ],
+    },
+    {
+        category: lang === "es" ? "Lenguajes & Dev" : "Languages & Dev",
+        tools: [
+            { name: "Python", icon: "🐍" },
+            { name: "Java", icon: "☕" },
+            { name: "Bash", icon: "🐚" },
+            { name: "Go", icon: "🐹" },
+        ],
+    },
+];
+---
+
+<section class="tech-stack container">
+    <div class="header">
+        <h2>{t("tools.title")}</h2>
+        <p>{t("tools.subtitle")}</p>
+    </div>
+    <div class="categories">
+        {
+            stack.map((cat) => (
+                <div class="category-card glass">
+                    <h3>{cat.category}</h3>
+                    <div class="tool-grid">
+                        {cat.tools.map((tool) => (
+                            <div class="tool-item hover-lift">
+                                <span class="icon">{tool.icon}</span>
+                                <span class="name">{tool.name}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .tech-stack {
+        padding: 80px 2rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .header p {
+        color: var(--text-secondary);
+    }
+
+    .categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .category-card {
+        padding: 2.5rem;
+        border-radius: 2rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        color: var(--accent-primary);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .tool-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .tool-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: var(--glass-border);
+        border-radius: 1rem;
+        transition: background 0.2s;
+    }
+
+    .tool-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .icon {
+        font-size: 2rem;
+    }
+
+    .name {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+</style>

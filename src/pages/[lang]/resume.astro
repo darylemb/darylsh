@@ -1,0 +1,9 @@
+---
+import PageResume from "../../components/PageResume.astro";
+
+export function getStaticPaths() {
+    return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+---
+
+<PageResume />

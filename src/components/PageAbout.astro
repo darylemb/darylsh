@@ -1,0 +1,59 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={`${t("nav.about")} | Daryl`}>
+    <Navbar />
+    <main class="container">
+        <section class="about">
+            <h1>{t("about.title")}</h1>
+            <div class="glass content">
+                <p>{t("about.description")}</p>
+                <p>
+                    {
+                        lang === "es"
+                            ? "Actualmente centrado en la automatización de infraestructura y prácticas de SRE. Constantemente aprendiendo y preparándome para certificaciones profesionales como AWS Solutions Architect y Kubernetes Developer."
+                            : "Currently focused on infrastructure automation and SRE practices. Constantly learning and preparing for professional certifications like AWS Solutions Architect and Kubernetes Developer."
+                    }
+                </p>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 120px 2rem;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 3rem;
+        background: linear-gradient(
+            135deg,
+            var(--accent-primary),
+            var(--accent-secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .content {
+        padding: 3rem;
+        border-radius: 2rem;
+        font-size: 1.25rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+    }
+
+    p {
+        margin-bottom: 2rem;
+    }
+</style>
