@@ -1,0 +1,92 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Navbar from "../../../components/Navbar.astro";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+
+export function getStaticPaths() {
+    return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const title = "K8s Cluster Management";
+const description =
+    lang === "es"
+        ? "Monitoreo de nodo en k3s dentro de una VM de OCI, gestionado por un ArgoCD mediante helm de grafana/prometheus y loki."
+        : "Node monitoring on k3s within an OCI VM, managed by ArgoCD using Grafana/Prometheus and Loki helm charts.";
+---
+
+<Layout title={`${title} | Daryl`}>
+    <Navbar />
+    <main class="page-container">
+        <div class="content glass">
+            <h1>{title}</h1>
+            <p class="description">{description}</p>
+
+            <div class="iframe-container">
+                <iframe
+                    src="https://snapshots.raintank.io/dashboard/snapshot/uxWHmXzOPAwJkY3UttU2jF3tGg9dyJaI"
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                >
+                </iframe>
+            </div>
+
+            <div class="back-link">
+                <a href={`/${lang}/projects`}>← {t("nav.projects")}</a>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .page-container {
+        padding: 120px 2rem 4rem;
+        max-width: 1400px;
+        margin: 0 auto;
+        min-height: 100vh;
+    }
+
+    .content {
+        padding: 2rem;
+        border-radius: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        background: var(--gradient-text);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .description {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+    }
+
+    .iframe-container {
+        width: 100%;
+        height: 800px;
+        background: #111;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--glass-border);
+        margin-bottom: 2rem;
+    }
+
+    .back-link a {
+        color: var(--text-secondary);
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+
+    .back-link a:hover {
+        color: var(--accent-primary);
+    }
+</style>
