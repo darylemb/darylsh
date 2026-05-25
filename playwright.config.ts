@@ -15,7 +15,7 @@ export default defineConfig({
     command: 'pnpm build && pnpm preview',
     url: 'http://localhost:4321',
     timeout: 120 * 1000,
-    reuseExistingServer: true
+    reuseExistingServer: !process.env.CI
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } }
