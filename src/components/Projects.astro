@@ -1,14 +1,5 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import terraformLogo from "../assets/tech-logos/terraform.svg";
-import awsLogo from "../assets/tech-logos/aws.svg";
-import gcpLogo from "../assets/tech-logos/gcp.svg";
-import kubernetesLogo from "../assets/tech-logos/kubernetes.svg";
-import dockerLogo from "../assets/tech-logos/docker.svg";
-import helmLogo from "../assets/tech-logos/helm.svg";
-import jenkinsLogo from "../assets/tech-logos/jenkins.svg";
-import githubActionsLogo from "../assets/tech-logos/github-actions.svg";
-import azureDevopsLogo from "../assets/tech-logos/azure-devops.svg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -22,9 +13,9 @@ const projects = [
                 : "Multi-cloud infrastructure automation (AWS/GCP) using Terraform.",
         link: `/${lang}/construction`,
         tags: [
-            { name: "Terraform", icon: terraformLogo },
-            { name: "AWS", icon: awsLogo },
-            { name: "GCP", icon: gcpLogo },
+            { name: "Terraform", icon: "/tech-logos/terraform.svg" },
+            { name: "AWS", icon: "/tech-logos/aws.svg" },
+            { name: "GCP", icon: "/tech-logos/gcp.svg" },
         ],
     },
     {
@@ -35,9 +26,9 @@ const projects = [
                 : "Design and management of Kubernetes clusters (EKS, GKE, AKS).",
         link: `/${lang}/projects/k8s-management`,
         tags: [
-            { name: "Kubernetes", icon: kubernetesLogo },
-            { name: "Docker", icon: dockerLogo },
-            { name: "Helm", icon: helmLogo },
+            { name: "Kubernetes", icon: "/tech-logos/kubernetes.svg" },
+            { name: "Docker", icon: "/tech-logos/docker.svg" },
+            { name: "Helm", icon: "/tech-logos/helm.svg" },
         ],
     },
     {
@@ -48,9 +39,9 @@ const projects = [
                 : "Robust pipeline implementation with Jenkins, Azure DevOps, and GitHub Actions.",
         link: `/${lang}/construction`,
         tags: [
-            { name: "Jenkins", icon: jenkinsLogo },
-            { name: "GitHub Actions", icon: githubActionsLogo },
-            { name: "Azure DevOps", icon: azureDevopsLogo },
+            { name: "Jenkins", icon: "/tech-logos/jenkins.svg" },
+            { name: "GitHub Actions", icon: "/tech-logos/github-actions.svg" },
+            { name: "Azure DevOps", icon: "/tech-logos/azure-devops.svg" },
         ],
     },
 ];
