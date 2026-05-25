@@ -8,29 +8,29 @@ const stack = [
     {
         category: lang === "es" ? "Cloud & Infraestructura" : "Cloud & Infra",
         tools: [
-            { name: "AWS", icon: "☁️" },
-            { name: "GCP", icon: "🌐" },
-            { name: "Azure", icon: "🔷" },
-            { name: "Terraform", icon: "🏗️" },
-            { name: "Kubernetes", icon: "☸️" },
+            { name: "AWS", icon: "/tech-logos/aws.svg" },
+            { name: "GCP", icon: "/tech-logos/gcp.svg" },
+            { name: "Azure", icon: "/tech-logos/azure.svg" },
+            { name: "Terraform", icon: "/tech-logos/terraform.svg" },
+            { name: "Kubernetes", icon: "/tech-logos/kubernetes.svg" },
         ],
     },
     {
         category: "CI/CD & Automation",
         tools: [
-            { name: "Jenkins", icon: "👷" },
-            { name: "GH Actions", icon: "🚀" },
-            { name: "ArgoCD", icon: "🐙" },
-            { name: "Ansible", icon: "📜" },
+            { name: "Jenkins", icon: "/tech-logos/jenkins.svg" },
+            { name: "GitHub Actions", icon: "/tech-logos/github-actions.svg" },
+            { name: "ArgoCD", icon: "/tech-logos/argocd.svg" },
+            { name: "Ansible", icon: "/tech-logos/ansible.svg" },
         ],
     },
     {
         category: lang === "es" ? "Lenguajes & Dev" : "Languages & Dev",
         tools: [
-            { name: "Python", icon: "🐍" },
-            { name: "Java", icon: "☕" },
-            { name: "Bash", icon: "🐚" },
-            { name: "Go", icon: "🐹" },
+            { name: "Python", icon: "/tech-logos/python.svg" },
+            { name: "Java", icon: "/tech-logos/java.svg" },
+            { name: "Bash", icon: "/tech-logos/bash.svg" },
+            { name: "Go", icon: "/tech-logos/go.svg" },
         ],
     },
 ];
@@ -49,7 +49,7 @@ const stack = [
                     <div class="tool-grid">
                         {cat.tools.map((tool) => (
                             <div class="tool-item hover-lift">
-                                <span class="icon">{tool.icon}</span>
+                                <img class="icon" src={tool.icon} alt={tool.name} width="32" height="32" />
                                 <span class="name">{tool.name}</span>
                             </div>
                         ))}
@@ -125,7 +125,9 @@ const stack = [
     }
 
     .icon {
-        font-size: 2rem;
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
     }
 
     .name {
