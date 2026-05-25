@@ -198,8 +198,8 @@ Create `.github/workflows/ci-cd.yml` with these jobs:
 ## Icon Download Strategy
 
 ```bash
-# Create icons directory
-mkdir -p src/assets/tech-logos
+# Create icons directory (served statically via /tech-logos/... URLs)
+mkdir -p public/tech-logos
 
 # Download from Simple Icons CDN (example)
 # AWS, Azure require manual download from brand sites

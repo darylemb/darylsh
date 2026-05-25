@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: User description: "Implenta testing en el constitution, a todos los niveles, escaneos de seguridad en paquetes y lints de codigo. Revisa la pagina con playwright tambien en constitution. Busca los iconos en la UI y reemplazalos con los iconos originales a los que hacen referencia, con buena calidad y en svg de preferencia (png en caso de no existir). Aplica las buenas practicas para este proyecto. Implementa las mejores consideraciones teniendo en cuenta que esta ejecutandose en cloudflare pages"
+**Input**: User description: "Implementa testing en el constitution, a todos los niveles, escaneos de seguridad en paquetes y lints de codigo. Revisa la pagina con playwright tambien en constitution. Busca los iconos en la UI y reemplazalos con los iconos originales a los que hacen referencia, con buena calidad y en svg de preferencia (png en caso de no existir). Aplica las buenas practicas para este proyecto. Implementa las mejores consideraciones teniendo en cuenta que esta ejecutandose en cloudflare pages"
 
 ## User Scenarios & Testing *(mandatory)*
 

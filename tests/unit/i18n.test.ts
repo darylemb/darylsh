@@ -54,7 +54,8 @@ describe('i18n utilities', () => {
             expect(tEn('hero.badge')).toBe('Available for new projects');
         });
 
-        it('should fallback to default language for missing key in specific lang', () => {
+        it('should return undefined for a key not present in any language', () => {
+            // @ts-expect-error testing runtime behavior with an invalid key
             expect(tEn('nonexistent.key')).toBeUndefined();
         });
 

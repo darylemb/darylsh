@@ -102,8 +102,10 @@
 
 ### Directory Structure for Icons
 
+Icons are served statically from `public/tech-logos/` and referenced via `/tech-logos/...` URLs:
+
 ```
-src/assets/tech-logos/
+public/tech-logos/
 ├── aws.svg
 ├── gcp.svg (googlecloud)
 ├── azure.svg

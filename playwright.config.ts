@@ -12,10 +12,10 @@ export default defineConfig({
     trace: 'on-first-retry'
   },
   webServer: {
-    command: 'npm run preview',
+    command: 'pnpm build && pnpm preview',
     url: 'http://localhost:4321',
     timeout: 120 * 1000,
-    reuseExistingServer: !process.env.CI
+    reuseExistingServer: true
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } }

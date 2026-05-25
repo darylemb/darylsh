@@ -14,7 +14,7 @@ Implement comprehensive testing infrastructure (unit, integration, E2E), code li
 
 **Language/Version**: TypeScript 5.7+, Node.js 20+
 
-**Primary Dependencies**: Astro 5.16.15+, Vitest 2.0.0, Playwright 1.50.0, ESLint 9.0.0
+**Primary Dependencies**: Astro 5.16.15+, Vitest 4.1.7, Playwright 1.60.0, ESLint 10.4.0
 
 **Storage**: N/A (static site)
 
@@ -66,7 +66,6 @@ specs/001-testing-constitution/
 /
 ├── src/
 │   ├── assets/
-│   │   └── tech-logos/           # NEW: SVG icons for TechStack
 │   ├── i18n/
 │   │   ├── utils.ts
 │   │   └── ui.ts
@@ -74,6 +73,8 @@ specs/001-testing-constitution/
 │   │   ├── TechStack.astro       # MODIFIED: Replace emoji with SVG icons
 │   │   └── ...
 │   └── ...
+├── public/
+│   └── tech-logos/               # NEW: SVG icons served statically for TechStack
 ├── tests/                         # NEW: Test directory
 │   ├── unit/
 │   │   └── i18n.test.ts          # NEW: Unit tests for i18n utils
@@ -88,7 +89,7 @@ specs/001-testing-constitution/
 └── package.json                  # MODIFIED: Add scripts and devDeps
 ```
 
-**Structure Decision**: Single project structure (Astro static site). Testing directories added at project root. Icon assets in src/assets/tech-logos for Astro integration.
+**Structure Decision**: Single project structure (Astro static site). Testing directories added at project root. Icon assets in `public/tech-logos/` for static serving via `/tech-logos/...` URLs.
 
 ---
 
