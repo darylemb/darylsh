@@ -1,5 +1,18 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import awsLogo from "../assets/tech-logos/aws.svg";
+import gcpLogo from "../assets/tech-logos/gcp.svg";
+import azureLogo from "../assets/tech-logos/azure.svg";
+import terraformLogo from "../assets/tech-logos/terraform.svg";
+import kubernetesLogo from "../assets/tech-logos/kubernetes.svg";
+import jenkinsLogo from "../assets/tech-logos/jenkins.svg";
+import githubActionsLogo from "../assets/tech-logos/github-actions.svg";
+import argocdLogo from "../assets/tech-logos/argocd.svg";
+import ansibleLogo from "../assets/tech-logos/ansible.svg";
+import pythonLogo from "../assets/tech-logos/python.svg";
+import javaLogo from "../assets/tech-logos/java.svg";
+import bashLogo from "../assets/tech-logos/bash.svg";
+import goLogo from "../assets/tech-logos/go.svg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -8,29 +21,29 @@ const stack = [
     {
         category: lang === "es" ? "Cloud & Infraestructura" : "Cloud & Infra",
         tools: [
-            { name: "AWS", icon: "☁️" },
-            { name: "GCP", icon: "🌐" },
-            { name: "Azure", icon: "🔷" },
-            { name: "Terraform", icon: "🏗️" },
-            { name: "Kubernetes", icon: "☸️" },
+            { name: "AWS", icon: awsLogo },
+            { name: "GCP", icon: gcpLogo },
+            { name: "Azure", icon: azureLogo },
+            { name: "Terraform", icon: terraformLogo },
+            { name: "Kubernetes", icon: kubernetesLogo },
         ],
     },
     {
         category: "CI/CD & Automation",
         tools: [
-            { name: "Jenkins", icon: "👷" },
-            { name: "GH Actions", icon: "🚀" },
-            { name: "ArgoCD", icon: "🐙" },
-            { name: "Ansible", icon: "📜" },
+            { name: "Jenkins", icon: jenkinsLogo },
+            { name: "GitHub Actions", icon: githubActionsLogo },
+            { name: "ArgoCD", icon: argocdLogo },
+            { name: "Ansible", icon: ansibleLogo },
         ],
     },
     {
         category: lang === "es" ? "Lenguajes & Dev" : "Languages & Dev",
         tools: [
-            { name: "Python", icon: "🐍" },
-            { name: "Java", icon: "☕" },
-            { name: "Bash", icon: "🐚" },
-            { name: "Go", icon: "🐹" },
+            { name: "Python", icon: pythonLogo },
+            { name: "Java", icon: javaLogo },
+            { name: "Bash", icon: bashLogo },
+            { name: "Go", icon: goLogo },
         ],
     },
 ];
@@ -49,7 +62,7 @@ const stack = [
                     <div class="tool-grid">
                         {cat.tools.map((tool) => (
                             <div class="tool-item hover-lift">
-                                <span class="icon">{tool.icon}</span>
+                                <img class="icon" src={tool.icon} alt={tool.name} width="32" height="32" />
                                 <span class="name">{tool.name}</span>
                             </div>
                         ))}
@@ -125,7 +138,9 @@ const stack = [
     }
 
     .icon {
-        font-size: 2rem;
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
     }
 
     .name {

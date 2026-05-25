@@ -1,5 +1,14 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import terraformLogo from "../assets/tech-logos/terraform.svg";
+import awsLogo from "../assets/tech-logos/aws.svg";
+import gcpLogo from "../assets/tech-logos/gcp.svg";
+import kubernetesLogo from "../assets/tech-logos/kubernetes.svg";
+import dockerLogo from "../assets/tech-logos/docker.svg";
+import helmLogo from "../assets/tech-logos/helm.svg";
+import jenkinsLogo from "../assets/tech-logos/jenkins.svg";
+import githubActionsLogo from "../assets/tech-logos/github-actions.svg";
+import azureDevopsLogo from "../assets/tech-logos/azure-devops.svg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -12,7 +21,11 @@ const projects = [
                 ? "Automatización de infraestructura multicloud (AWS/GCP) usando Terraform."
                 : "Multi-cloud infrastructure automation (AWS/GCP) using Terraform.",
         link: `/${lang}/construction`,
-        tags: ["Terraform", "AWS", "GCP"],
+        tags: [
+            { name: "Terraform", icon: terraformLogo },
+            { name: "AWS", icon: awsLogo },
+            { name: "GCP", icon: gcpLogo },
+        ],
     },
     {
         title: "K8s Cluster Management",
@@ -21,7 +34,11 @@ const projects = [
                 ? "Diseño y administración de clusters de Kubernetes (EKS, GKE, AKS)."
                 : "Design and management of Kubernetes clusters (EKS, GKE, AKS).",
         link: `/${lang}/projects/k8s-management`,
-        tags: ["Kubernetes", "Docker", "Helm"],
+        tags: [
+            { name: "Kubernetes", icon: kubernetesLogo },
+            { name: "Docker", icon: dockerLogo },
+            { name: "Helm", icon: helmLogo },
+        ],
     },
     {
         title: "CI/CD Pipeline Design",
@@ -30,7 +47,11 @@ const projects = [
                 ? "Implementación de pipelines robustos con Jenkins, Azure DevOps y GitHub Actions."
                 : "Robust pipeline implementation with Jenkins, Azure DevOps, and GitHub Actions.",
         link: `/${lang}/construction`,
-        tags: ["Jenkins", "GitHub Actions", "GitLab CI"],
+        tags: [
+            { name: "Jenkins", icon: jenkinsLogo },
+            { name: "GitHub Actions", icon: githubActionsLogo },
+            { name: "Azure DevOps", icon: azureDevopsLogo },
+        ],
     },
 ];
 ---
@@ -46,7 +67,10 @@ const projects = [
                 <div class="project-card glass hover-lift">
                     <div class="tags">
                         {project.tags.map((tag) => (
-                            <span class="tag">{tag}</span>
+                            <span class="tag">
+                                <img src={tag.icon} alt={tag.name} width="16" height="16" />
+                                {tag.name}
+                            </span>
                         ))}
                     </div>
                     <h3>{project.title}</h3>
@@ -101,14 +125,24 @@ const projects = [
         display: flex;
         gap: 0.5rem;
         margin-bottom: 1.5rem;
+        flex-wrap: wrap;
     }
 
     .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
         font-size: 0.75rem;
         padding: 0.25rem 0.75rem;
         border-radius: 99rem;
         background: var(--glass-border);
         color: var(--text-secondary);
+    }
+
+    .tag img {
+        width: 14px;
+        height: 14px;
+        object-fit: contain;
     }
 
     h3 {

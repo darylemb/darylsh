@@ -6,11 +6,35 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "lint": "eslint \"src/**/*.{js,ts,astro}\"",
+    "lint:fix": "eslint \"src/**/*.{js,ts,astro}\" --fix",
+    "typecheck": "tsc --noEmit",
+    "audit": "npm audit --audit-level=high"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource-variable/roboto-mono": "^5.2.8",
     "astro": "^5.16.15"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.60.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.4",
+    "@typescript-eslint/parser": "^8.59.4",
+    "@vitest/coverage-v8": "^4.1.7",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-security": "^4.0.0",
+    "playwright": "^1.60.0",
+    "typescript-eslint": "^8.59.4",
+    "vitest": "^4.1.7"
   }
 }

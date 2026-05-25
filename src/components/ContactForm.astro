@@ -61,7 +61,7 @@ const t = useTranslations(lang);
     form?.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData);
+        Object.fromEntries(formData);
 
         // This will call the Cloudflare Worker eventually
         // For now, we simulate success
