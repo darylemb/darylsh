@@ -7,7 +7,8 @@
 
 - [ ] T001 [P] **BLOCKER**: Daryl chooses provider (Resend, Cloudflare Email Workers, or Formspree) — see T040 in umbrella tasks.md
 - [ ] T002 [P] Create branch `002d-contact-form-backend` from main (after 002c merged)
-- [ ] T003 [P] Add new i18n keys to `src/i18n/ui.ts`:
+- [ ] T003 [P] **Email address confirmed**: `darylemb@pm.me` (Proton Mail) — set as `CONTACT_TO` env var
+- [ ] T004 [P] Add new i18n keys to `src/i18n/ui.ts`:
   - `contact.sending` = "Enviando..." / "Sending..."
   - `contact.success` = "¡Mensaje enviado con éxito! Te responderé pronto." / "Message sent successfully! I'll reply soon."
   - `contact.error_generic` = "Lo sentimos, hubo un error." / "Sorry, there was an error."

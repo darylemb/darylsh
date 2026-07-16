@@ -372,6 +372,6 @@ CONTACT_TO=daryl@example.com
 ## Open Questions
 
 1. **Provider**: Resend (recommended) vs Cloudflare Email Workers vs Formspree (BLOCKER — T040)
-2. **Daryl's email address**: For `CONTACT_TO` (BLOCKER)
+2. **Daryl's email address**: ✅ **RESOLVED** — `darylemb@pm.me` (Proton Mail)
 3. **Rate limit values**: 5/hour — too strict or too lenient?
 4. **Auto-responder**: Add auto-reply to visitor?

@@ -143,10 +143,10 @@ As a visitor, I want clear error messages so I know what to fix.
 
 ## Open Questions
 
-1. **Provider choice**: Resend (recommended), Cloudflare Email Workers, or Formspree? **Owner**: Daryl. **Blocks**: implementation.
-2. **Daryl's email address**: What goes in `CONTACT_TO`? **Owner**: Daryl. **Blocks**: env config.
-3. **Rate limit values**: 5/hour per IP — too strict or too lenient? **Owner**: Daryl.
-4. **Auto-responder**: Add a "Thanks, I'll reply within X" auto-reply to the visitor? **Owner**: Daryl.
+1. **Provider**: Resend (recommended) vs Cloudflare Email Workers vs Formspree (BLOCKER)
+2. **Daryl's email address**: ✅ **RESOLVED** — `darylemb@pm.me` (Proton Mail)
+3. **Rate limit values**: 5/hour — too strict or too lenient?
+4. **Auto-responder**: Add auto-reply to visitor?
 
 ## Success Criteria
 
