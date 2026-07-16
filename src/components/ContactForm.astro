@@ -60,7 +60,8 @@ const t = useTranslations(lang);
 
     form?.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const formData = new FormData(form);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const formData = new FormData(form); // Wired in 002d-contact-form-backend
 
         // This will call the Cloudflare Worker eventually
         // For now, we simulate success
