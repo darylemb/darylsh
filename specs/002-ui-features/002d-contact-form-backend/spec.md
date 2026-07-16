@@ -43,7 +43,7 @@ As a visitor, I want clear error messages so I know what to fix.
 **Acceptance Scenarios**:
 1. **Given** I submit an empty form, **When** the browser validates, **Then** required fields show the native HTML5 validation error
 2. **Given** I submit an invalid email, **When** the browser validates, **Then** the email field shows an error
-3. **Given** the backend is down, **When** I submit, **Then** I see "Lo sentimos, el servicio no está disponible. Envíame un email a daryl@example.com" with a `mailto:` link
+3. **Given** the backend is down, **When** I submit, **Then** I see "Lo sentimos, el servicio no está disponible. Envíame un email a darylemb@gmail.com" with a `mailto:` link
 4. **Given** the rate limit is exceeded, **When** I submit, **Then** I see "Has enviado demasiados mensajes. Intenta de nuevo en 1 hora."
 
 ## Edge Cases
@@ -92,7 +92,7 @@ As a visitor, I want clear error messages so I know what to fix.
 
 ### FR-5: Environment configuration
 - New env var: `RESEND_API_KEY` (required, build/runtime)
-- New env var: `CONTACT_TO` (Daryl's email, e.g. `daryl@example.com`)
+- New env var: `CONTACT_TO` (Daryl's email, e.g. `darylemb@gmail.com`)
 - Document in `README.md` and `.env.example`
 - **DO NOT commit secrets** to git
 
@@ -144,7 +144,7 @@ As a visitor, I want clear error messages so I know what to fix.
 ## Open Questions
 
 1. **Provider**: Resend (recommended) vs Cloudflare Email Workers vs Formspree (BLOCKER)
-2. **Daryl's email address**: ✅ **RESOLVED** — `darylemb@pm.me` (Proton Mail)
+2. **Daryl's email address**: ✅ **RESOLVED** — `darylemb@gmail.com` (Gmail)
 3. **Rate limit values**: 5/hour — too strict or too lenient?
 4. **Auto-responder**: Add auto-reply to visitor?
 

@@ -315,10 +315,10 @@ const formLoadTime = Date.now();
             } else if (response.status === 429) {
                 status.textContent = "Has enviado demasiados mensajes. Intenta de nuevo en 1 hora.";
             } else {
-                status.innerHTML = 'Lo sentimos, hubo un error. Envíame un email a <a href="mailto:daryl@example.com">daryl@example.com</a>.';
+                status.innerHTML = 'Lo sentimos, hubo un error. Envíame un email a <a href="mailto:darylemb@gmail.com">darylemb@gmail.com</a>.';
             }
         } catch (err) {
-            status.innerHTML = 'Error de red. Envíame un email a <a href="mailto:daryl@example.com">daryl@example.com</a>.';
+            status.innerHTML = 'Error de red. Envíame un email a <a href="mailto:darylemb@gmail.com">darylemb@gmail.com</a>.';
         } finally {
             button.disabled = false;
             loader?.classList.add("hidden");
@@ -343,9 +343,9 @@ const formLoadTime = Date.now();
 ```bash
 # Resend API key for sending emails (https://resend.com/api-keys)
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxx
-
+RESEND_API_KEY=re_xxx...n
 # Email address to receive contact form submissions
-CONTACT_TO=daryl@example.com
+CONTACT_TO=darylemb@gmail.com
 ```
 
 ## Verification
@@ -372,6 +372,6 @@ CONTACT_TO=daryl@example.com
 ## Open Questions
 
 1. **Provider**: Resend (recommended) vs Cloudflare Email Workers vs Formspree (BLOCKER — T040)
-2. **Daryl's email address**: ✅ **RESOLVED** — `darylemb@pm.me` (Proton Mail)
+2. **Daryl's email address**: ✅ **RESOLVED** — `darylemb@gmail.com` (Gmail)
 3. **Rate limit values**: 5/hour — too strict or too lenient?
 4. **Auto-responder**: Add auto-reply to visitor?
