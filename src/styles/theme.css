@@ -1,0 +1,50 @@
+/*
+ * Theme variables for light/dark mode.
+ * Dark is the default (no data-theme attribute needed).
+ * Light is opt-in via [data-theme="light"] on <html>.
+ *
+ * The `*` transition is intentionally scoped to color-related properties only
+ * to avoid animating layout-affecting properties. Override with
+ * `prefers-reduced-motion` to disable entirely.
+ */
+
+:root {
+    /* Dark theme (default) */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --accent-primary: #3b82f6;
+    --accent-secondary: #8b5cf6;
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --code-bg: #1e1e1e;
+    --link-hover: #60a5fa;
+}
+
+:root[data-theme="light"] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --accent-primary: #2563eb;
+    --accent-secondary: #7c3aed;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --glass-bg: rgba(0, 0, 0, 0.03);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --code-bg: #f1f5f9;
+    --link-hover: #1d4ed8;
+}
+
+* {
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}

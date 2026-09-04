@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import ThemeToggle from "./ThemeToggle.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -32,6 +33,7 @@ const toggleHref = getRelativeLocaleUrl(toggleLang, currentPath);
             {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
             <div class="nav-extra">
                 <a href={toggleHref} class="lang-toggle">{toggleLabel}</a>
+                <ThemeToggle />
                 <a href={getRelativeLocaleUrl(lang, "contact")} class="btn"
                     >{t("nav.contact")}</a
                 >
