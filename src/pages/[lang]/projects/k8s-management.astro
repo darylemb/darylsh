@@ -13,11 +13,14 @@ const t = useTranslations(lang);
 const title = "K8s Cluster Management";
 const description =
     lang === "es"
-        ? "Monitoreo de nodo en k3s dentro de una VM de OCI, gestionado por un ArgoCD mediante helm de grafana/prometheus y loki."
-        : "Node monitoring on k3s within an OCI VM, managed by ArgoCD using Grafana/Prometheus and Loki helm charts.";
+            ? "Cluster Kubernetes self-hosted: multi-nodo, GitOps con Argo CD, CI/CD con GitHub Actions, observabilidad con Prometheus y HA."
+            : "Self-hosted Kubernetes cluster: multi-node, GitOps with Argo CD, CI/CD with GitHub Actions, Prometheus observability, and HA.";
 ---
 
-<Layout title={`${title} | Daryl`}>
+<Layout
+    title={`${title} | Daryl Mendoza`}
+    description={description}
+>
     <Navbar />
     <main class="page-container">
         <div class="content glass">

@@ -1,9 +1,19 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import PageResume from "../../components/PageResume.astro";
+import { getLangFromUrl } from "../../i18n/utils";
 
 export function getStaticPaths() {
     return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
 }
+
+const lang = getLangFromUrl(Astro.url);
+const desc = lang === "es"
+            ? "Resumen profesional: DevOps/SRE con experiencia en AWS, GCP, Kubernetes, Terraform, CI/CD con GitHub Actions y cloud ops."
+            : "Professional summary: DevOps/SRE engineer with hands-on experience in AWS, GCP, Kubernetes, Terraform, CI/CD, and GitHub Actions.";
+const titleSuffix = lang === "es" ? "Experiencia Técnica" : "Technical Resume";
 ---
 
-<PageResume />
+<Layout title={titleSuffix} description={desc}>
+    <PageResume />
+</Layout>

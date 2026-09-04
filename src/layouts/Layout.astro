@@ -2,38 +2,77 @@
 import "@fontsource-variable/roboto-mono";
 import "../styles/theme.css";
 import { getLangFromUrl } from "../i18n/utils";
+import { buildSeoProps, type Lang, type SeoProps } from "../lib/seo";
 
 interface Props {
     title?: string;
     description?: string;
+    image?: string;
+    type?: "website" | "article" | "profile";
+    publishedTime?: string;
+    modifiedTime?: string;
+    tags?: string[];
+    /**
+     * Set to true on error pages. Suppresses hreflang generation
+     * and uses the homepage JSON-LD context (no per-page schema duplication).
+     */
+    noIndex?: boolean;
 }
 
-const lang = getLangFromUrl(Astro.url);
+const lang = getLangFromUrl(Astro.url) as Lang;
+const cleanPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isNotFound =
+    cleanPath === "/404" ||
+    cleanPath === "/404.html" ||
+    cleanPath.endsWith("/404") ||
+    cleanPath.endsWith("/404.html");
 const {
     title = lang === "es"
         ? "Daryl | Portfolio Personal"
         : "Daryl | Personal Portfolio",
     description = lang === "es"
-        ? "Ingeniero DevOps / SRE enfocado en automatización e infraestructura cloud."
-        : "DevOps / SRE Engineer focused on automation and cloud infrastructure.",
+        ? "Portafolio de Daryl Mendoza, ingeniero DevOps/SRE en CDMX. AWS, GCP, Kubernetes, Terraform, CI/CD y GitHub Actions. Mis proyectos y experiencia."
+        : "Daryl Mendoza's DevOps/SRE portfolio from Mexico City. AWS, GCP, Kubernetes, Terraform, CI/CD pipelines, and GitHub Actions expertise.",
+    image,
+    type,
+    publishedTime,
+    modifiedTime,
+    tags,
+    noIndex = isNotFound,
 } = Astro.props;
+
+const seoProps: SeoProps = {
+    titleSuffix: undefined,
+    description,
+    image,
+    type,
+    publishedTime,
+    modifiedTime,
+    tags,
+};
+
+const seo = buildSeoProps(seoProps, {
+    lang,
+    path: isNotFound ? "/es/" : Astro.url.pathname,
+});
 ---
 
 <!doctype html>
 <html lang={lang}>
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
-        <link
-            rel="canonical"
-            href={new URL(
-                Astro.url.pathname,
-                Astro.site ?? "https://daryl.sh",
-            ).toString()}
-        />
+
+        <!-- Hreflang: bilingual targeting ES/EN, x-default = ES -->
+        {!isNotFound && seo.hreflang.map(({ lang: hl, href }) => (
+            <link rel="alternate" hreflang={hl} href={href} />
+        ))}
+
+        <!-- Canonical: prevents duplicate-content penalty -->
+        <link rel="canonical" href={seo.canonical} />
 
         <!-- Anti-FOUC: apply theme before CSS parses to prevent flash.
              Reads localStorage, falls back to prefers-color-scheme. -->
@@ -62,6 +101,27 @@ const {
         <meta name="title" content={title} />
         <meta name="description" content={description} />
         <meta name="color-scheme" content="light dark" />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content={seo.ogType} />
+        <meta property="og:url" content={seo.ogUrl} />
+        <meta property="og:title" content={seo.ogTitle} />
+        <meta property="og:description" content={seo.ogDescription} />
+        <meta property="og:image" content={seo.ogImage} />
+        <meta property="og:locale" content={seo.ogLocale} />
+        <meta property="og:site_name" content={seo.ogSiteName} />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content={seo.twitterCard} />
+        <meta name="twitter:url" content={seo.ogUrl} />
+        <meta name="twitter:title" content={seo.twitterTitle} />
+        <meta name="twitter:description" content={seo.twitterDescription} />
+        <meta name="twitter:image" content={seo.twitterImage} />
+        <meta name="twitter:site" content={seo.twitterSite} />
+        <meta name="twitter:creator" content={seo.twitterCreator} />
+
+        <!-- Structured Data: schema.org Person + WebSite + (optional) Article/Breadcrumb -->
+        <script type="application/ld+json" set:html={JSON.stringify(seo.jsonLd)}></script>
     </head>
     <body>
         <slot />

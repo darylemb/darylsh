@@ -12,9 +12,15 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout title={`${t("nav.projects")} | Daryl`}>
+<Layout
+    title={`${t("nav.projects")} | Daryl Mendoza`}
+    description={lang === "es"
+            ? "Proyectos DevOps: clusters Kubernetes self-hosted, CI/CD con GitHub Actions, despliegues multi-nube AWS/GCP y Cloudflare."
+            : "DevOps projects: self-hosted Kubernetes, CI/CD with GitHub Actions, multi-cloud AWS/GCP deployments, and Cloudflare."
+    }
+>
     <Navbar />
     <main style="padding-top: 100px;">
-        <ProjectsGrid />
+        <ProjectsGrid standalone />
     </main>
 </Layout>

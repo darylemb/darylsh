@@ -30,6 +30,14 @@ export default defineConfig([
       'astro/no-unsafe-inline-scripts': 'warn'
     }
   },
+  {
+    // Allow set:html only in Layout.astro where it serves the JSON-LD payload
+    // constructed in src/lib/seo.ts (controlled, non-user-input).
+    files: ['src/layouts/Layout.astro'],
+    rules: {
+      'astro/no-set-html-directive': 'off'
+    }
+  },
 
   {
     files: ['**/*.ts', '**/*.tsx'],

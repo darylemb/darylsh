@@ -1,5 +1,4 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
@@ -60,55 +59,55 @@ const certifications = [
 ];
 ---
 
-<Layout title={`${t("nav.resume")} | Daryl`}>
-    <Navbar />
-    <main class="container">
-        <header>
-            <h1>{t("resume.title")}</h1>
-            <a
-                href="/resume.pdf"
-                download="Daryl_Mendoza_Resume.pdf"
-                class="btn-download">{t("resume.download")}</a
-            >
-        </header>
+<Navbar />
+<main class="container">
+<Navbar />
+<main class="container">
+    <header>
+        <h1>{t("resume.title")}</h1>
+        <a
+            href="/resume.pdf"
+            download="Daryl_Mendoza_Resume.pdf"
+            class="btn-download">{t("resume.download")}</a
+        >
+    </header>
 
-        <div class="grid">
-            <section class="experience">
-                {
-                    experience.map((exp) => (
-                        <div class="exp-item glass">
-                            <span class="period">{exp.period}</span>
-                            <h3>
-                                {exp.role} @ {exp.company}
-                            </h3>
-                            <ul>
-                                {exp.highlights.map((h) => (
-                                    <li>{h}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))
-                }
-            </section>
-
-            <aside>
-                <div class="skill-box glass">
-                    <h3>{t("resume.skills")}</h3>
-                    <div class="tags">
-                        {skills.map((s) => <span class="tag">{s}</span>)}
+    <div class="grid">
+        <section class="experience">
+            {
+                experience.map((exp) => (
+                    <div class="exp-item glass">
+                        <span class="period">{exp.period}</span>
+                        <h3>
+                            {exp.role} @ {exp.company}
+                        </h3>
+                        <ul>
+                            {exp.highlights.map((h) => (
+                                <li>{h}</li>
+                            ))}
+                        </ul>
                     </div>
-                </div>
+                ))
+            }
+        </section>
 
-                <div class="skill-box glass">
-                    <h3>{t("resume.certifications")}</h3>
-                    <ul>
-                        {certifications.map((c) => <li>{c}</li>)}
-                    </ul>
+        <aside>
+            <div class="skill-box glass">
+                <h3>{t("resume.skills")}</h3>
+                <div class="tags">
+                    {skills.map((s) => <span class="tag">{s}</span>)}
                 </div>
-            </aside>
-        </div>
-    </main>
-</Layout>
+            </div>
+
+            <div class="skill-box glass">
+                <h3>{t("resume.certifications")}</h3>
+                <ul>
+                    {certifications.map((c) => <li>{c}</li>)}
+                </ul>
+            </div>
+        </aside>
+    </div>
+</main>
 
 <style>
     .container {

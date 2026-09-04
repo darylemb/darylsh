@@ -1,5 +1,4 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
@@ -7,9 +6,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout title={`${t("nav.about")} | Daryl`}>
-    <Navbar />
-    <main class="container">
+<Navbar />
+<main class="container">
         <section class="about">
             <h1>{t("about.title")}</h1>
             <div class="glass content">
@@ -24,7 +22,6 @@ const t = useTranslations(lang);
             </div>
         </section>
     </main>
-</Layout>
 
 <style>
     .container {
