@@ -12,7 +12,9 @@ const lang = getLangFromUrl(Astro.url);
 const desc = lang === "es"
             ? "Artículos técnicos sobre DevOps, SRE, Kubernetes, Terraform, AWS, GCP, CI/CD y GitHub Actions: tutoriales y lecciones en producción."
             : "Technical articles on DevOps, SRE, Kubernetes, Terraform, AWS, GCP, CI/CD pipelines, and GitHub Actions.";
-const titleSuffix = lang === "es" ? "Blog" : "Blog";
+const titleSuffix = lang === "es"
+            ? "Blog | Daryl Mendoza · DevOps / SRE"
+            : "Blog | Daryl Mendoza · DevOps / SRE";
 ---
 
 <Layout title={titleSuffix} description={desc}>
