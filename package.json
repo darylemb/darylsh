@@ -14,7 +14,7 @@
     "test:e2e:ui": "playwright test --ui",
     "lint": "eslint \"src/**/*.{js,ts,astro}\"",
     "lint:fix": "eslint \"src/**/*.{js,ts,astro}\" --fix",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "astro check --minimumSeverity=error",
     "audit": "npm audit --audit-level=high"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "astro": "^5.16.15"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.60.0",
     "@typescript-eslint/eslint-plugin": "^8.59.4",
@@ -35,6 +36,7 @@
     "eslint-plugin-security": "^4.0.0",
     "jsdom": "^29.1.1",
     "playwright": "^1.60.0",
+    "typescript": "^5.6.3",
     "typescript-eslint": "^8.59.4",
     "vitest": "^4.1.7"
   }
