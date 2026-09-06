@@ -12,11 +12,6 @@ interface Props {
     publishedTime?: string;
     modifiedTime?: string;
     tags?: string[];
-    /**
-     * Set to true on error pages. Suppresses hreflang generation
-     * and uses the homepage JSON-LD context (no per-page schema duplication).
-     */
-    noIndex?: boolean;
 }
 
 const lang = getLangFromUrl(Astro.url) as Lang;
@@ -38,7 +33,6 @@ const {
     publishedTime,
     modifiedTime,
     tags,
-    noIndex = isNotFound,
 } = Astro.props;
 
 const seoProps: SeoProps = {
