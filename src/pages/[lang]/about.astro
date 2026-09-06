@@ -1,9 +1,19 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import PageAbout from "../../components/PageAbout.astro";
+import { getLangFromUrl } from "../../i18n/utils";
 
 export function getStaticPaths() {
     return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
 }
+
+const lang = getLangFromUrl(Astro.url);
+const desc = lang === "es"
+            ? "Mi trayectoria como ingeniero DevOps/SRE: cloud multi-nube (AWS, GCP), Kubernetes en producción, CI/CD con GitHub Actions y Terraform."
+            : "My journey as a DevOps/SRE engineer: multi-cloud (AWS, GCP), production Kubernetes, CI/CD with GitHub Actions, and Terraform IaC.";
+const titleSuffix = lang === "es" ? "Sobre Daryl Mendoza" : "About Daryl Mendoza";
 ---
 
-<PageAbout />
+<Layout title={`${titleSuffix} | DevOps/SRE Engineer`} description={desc}>
+    <PageAbout />
+</Layout>

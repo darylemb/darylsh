@@ -1,8 +1,19 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
+interface Props {
+    /**
+     * When true, render the section title as an <h1> (use on standalone pages).
+     * When false (default), render as <h2> (use when embedded under another hero with h1).
+     */
+    standalone?: boolean;
+}
+
+const { standalone = false } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const Tag = standalone ? "h1" : "h2";
 
 const projects = [
     {
@@ -49,7 +60,7 @@ const projects = [
 
 <section id="projects" class="container">
     <div class="header">
-        <h2>{t("projects.title")}</h2>
+        <Tag>{t("projects.title")}</Tag>
         <p>{t("projects.description")}</p>
     </div>
     <div class="grid">

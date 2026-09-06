@@ -2,13 +2,20 @@
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import ContactForm from "../../components/ContactForm.astro";
+import { getLangFromUrl } from "../../i18n/utils";
 
 export function getStaticPaths() {
     return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
 }
+
+const lang = getLangFromUrl(Astro.url);
+const desc = lang === "es"
+            ? "Contacto para proyectos DevOps, SRE, consultoría en Kubernetes, AWS, GCP, Terraform o CI/CD. Disponible remoto desde CDMX."
+            : "Get in touch for DevOps, SRE, Kubernetes consulting, AWS, GCP, Terraform, or CI/CD pipeline projects.";
+const titleSuffix = lang === "es" ? "Contacto" : "Contact";
 ---
 
-<Layout>
+<Layout title={titleSuffix} description={desc}>
     <Navbar />
     <main style="padding-top: 100px;">
         <ContactForm />

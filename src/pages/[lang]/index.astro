@@ -1,9 +1,19 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import PageIndex from "../../components/PageIndex.astro";
+import { getLangFromUrl } from "../../i18n/utils";
 
 export function getStaticPaths() {
     return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
 }
+
+const lang = getLangFromUrl(Astro.url);
+const desc = lang === "es"
+            ? "Portafolio de Daryl Mendoza, ingeniero DevOps/SRE en CDMX. AWS, GCP, Kubernetes, Terraform, CI/CD y GitHub Actions. Mis proyectos y experiencia."
+            : "Daryl Mendoza's DevOps/SRE portfolio from Mexico City. AWS, GCP, Kubernetes, Terraform, CI/CD pipelines, and GitHub Actions expertise.";
+const titleSuffix = "Daryl Mendoza | DevOps/SRE Engineer";
 ---
 
-<PageIndex />
+<Layout title={titleSuffix} description={desc}>
+    <PageIndex />
+</Layout>
