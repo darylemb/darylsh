@@ -49,6 +49,8 @@ export type PageType = "website" | "article" | "profile";
 export interface SeoProps {
   /** Page title suffix is appended after `SITE.name`. Optional. */
   titleSuffix?: string;
+  /** Full page title (overrides `titleSuffix` + `SITE.name` computation). */
+  title?: string;
   /** Unique meta description, 120-160 chars. Falls back to `SITE.description[lang]`. */
   description?: string;
   /** Path to OG image, relative to `/`. Defaults to `/og/${lang}/default.png`. */
@@ -135,9 +137,10 @@ export function buildSeoProps(props: SeoProps, ctx: SeoContext): PrebuiltSeo {
     SITE.description[lang] ||
     SITE.description.es;
 
-  const title = props.titleSuffix
-    ? `${SITE.name} | ${props.titleSuffix}`
-    : `${SITE.name} | ${SITE.jobTitle[lang]}`;
+  const title = props.title?.trim()
+    || (props.titleSuffix
+        ? `${SITE.name} | ${props.titleSuffix}`
+        : `${SITE.name} | ${SITE.jobTitle[lang]}`);
 
   const imagePath = props.image?.trim() || defaultOgImage(lang);
   const ogImage = absoluteUrl(imagePath);
