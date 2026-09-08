@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getAllProjects, slugifyProjectId } from "../lib/projects";
 
 interface Props {
     /**
@@ -7,55 +8,23 @@ interface Props {
      * When false (default), render as <h2> (use when embedded under another hero with h1).
      */
     standalone?: boolean;
+    /**
+     * When true, limit to featured projects only (used on the homepage).
+     * Defaults to true — the homepage acts as a showcase, not a full index.
+     */
+    featuredOnly?: boolean;
 }
 
-const { standalone = false } = Astro.props;
+const { standalone = false, featuredOnly = true } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const Tag = standalone ? "h1" : "h2";
 
-const projects = [
-    {
-        title: "Cloud Infrastructure Automation",
-        description:
-            lang === "es"
-                ? "Automatización de infraestructura multicloud (AWS/GCP) usando Terraform."
-                : "Multi-cloud infrastructure automation (AWS/GCP) using Terraform.",
-        link: `/${lang}/construction`,
-        tags: [
-            { name: "Terraform", icon: "/tech-logos/terraform.svg" },
-            { name: "AWS", icon: "/tech-logos/aws.svg" },
-            { name: "GCP", icon: "/tech-logos/gcp.svg" },
-        ],
-    },
-    {
-        title: "K8s Cluster Management",
-        description:
-            lang === "es"
-                ? "Diseño y administración de clusters de Kubernetes (EKS, GKE, AKS)."
-                : "Design and management of Kubernetes clusters (EKS, GKE, AKS).",
-        link: `/${lang}/projects/k8s-management`,
-        tags: [
-            { name: "Kubernetes", icon: "/tech-logos/kubernetes.svg" },
-            { name: "Docker", icon: "/tech-logos/docker.svg" },
-            { name: "Helm", icon: "/tech-logos/helm.svg" },
-        ],
-    },
-    {
-        title: "CI/CD Pipeline Design",
-        description:
-            lang === "es"
-                ? "Implementación de pipelines robustos con Jenkins, Azure DevOps y GitHub Actions."
-                : "Robust pipeline implementation with Jenkins, Azure DevOps, and GitHub Actions.",
-        link: `/${lang}/construction`,
-        tags: [
-            { name: "Jenkins", icon: "/tech-logos/jenkins.svg" },
-            { name: "GitHub Actions", icon: "/tech-logos/github-actions.svg" },
-            { name: "Azure DevOps", icon: "/tech-logos/azure-devops.svg" },
-        ],
-    },
-];
+const allProjects = await getAllProjects(lang);
+const projects = featuredOnly
+    ? allProjects.filter((p) => p.data.featured)
+    : allProjects;
 ---
 
 <section id="projects" class="container">
@@ -68,22 +37,41 @@ const projects = [
             projects.map((project) => (
                 <div class="project-card glass hover-lift">
                     <div class="tags">
-                        {project.tags.map((tag) => (
+                        {project.data.tags.map((tag) => (
                             <span class="tag">
-                                <img src={tag.icon} alt={tag.name} width="16" height="16" />
+                                {tag.icon && (
+                                    <img
+                                        src={tag.icon}
+                                        alt={tag.name}
+                                        width="16"
+                                        height="16"
+                                    />
+                                )}
                                 {tag.name}
                             </span>
                         ))}
                     </div>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <a href={project.link} class="link">
+                    <h3>{project.data.title}</h3>
+                    <p>{project.data.description}</p>
+                    <a
+                        href={`/${lang}/projects/${slugifyProjectId(project)}`}
+                        class="link"
+                    >
                         {t("projects.view")} <span>→</span>
                     </a>
                 </div>
             ))
         }
     </div>
+    {
+        !featuredOnly && projects.length === 0 && (
+            <p class="empty">
+                {lang === "es"
+                    ? "Aún no hay proyectos publicados."
+                    : "No projects published yet."}
+            </p>
+        )
+    }
 </section>
 
 <style>
@@ -165,6 +153,11 @@ const projects = [
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        text-decoration: none;
+    }
+
+    .link:hover {
+        text-decoration: underline;
     }
 
     .link span {
@@ -173,5 +166,11 @@ const projects = [
 
     .link:hover span {
         transform: translateX(4px);
+    }
+
+    .empty {
+        text-align: center;
+        color: var(--text-secondary);
+        padding: 3rem 0;
     }
 </style>

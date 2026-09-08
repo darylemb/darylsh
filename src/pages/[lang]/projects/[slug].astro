@@ -1,0 +1,374 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Navbar from "../../../components/Navbar.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { getLangFromUrl } from "../../../i18n/utils";
+import type { Lang } from "../../../lib/seo";
+import {
+    slugifyProjectId,
+    getNextProject,
+    getPrevProject,
+} from "../../../lib/projects";
+
+export async function getStaticPaths() {
+    const projects = await getCollection("projects");
+    const langs = ["es", "en"] as const;
+    const paths = [];
+    for (const lang of langs) {
+        const langProjects = projects
+            .filter((p) => p.data.lang === lang)
+            .sort((a, b) => a.data.order - b.data.order);
+        for (const project of langProjects) {
+            paths.push({
+                params: {
+                    lang,
+                    slug: slugifyProjectId(project),
+                },
+                props: {
+                    project,
+                    allProjects: langProjects,
+                },
+            });
+        }
+    }
+    return paths;
+}
+
+interface Props {
+    project: CollectionEntry<"projects">;
+    allProjects: CollectionEntry<"projects">[];
+}
+
+const { project, allProjects } = Astro.props as Props;
+const lang = getLangFromUrl(Astro.url) as Lang;
+const { Content } = await project.render();
+
+const nextProject = getNextProject(project, allProjects);
+const prevProject = getPrevProject(project, allProjects);
+---
+
+<Layout
+    title={`${project.data.title} | Daryl Mendoza`}
+    description={project.data.description}
+    type="article"
+    publishedTime={project.data.pubDate.toISOString()}
+    tags={project.data.tags.map((t) => t.name)}
+>
+    <Navbar />
+    <main class="project-page container">
+        <a href={`/${lang}/projects`} class="back-link">
+            ← {lang === "es" ? "Volver a proyectos" : "Back to projects"}
+        </a>
+
+        <article class="project glass">
+            <header class="project-header">
+                <div class="meta">
+                    <span class="project-number">
+                        #{project.data.order.toString().padStart(2, "0")}
+                    </span>
+                </div>
+                <h1>{project.data.title}</h1>
+                <p class="lead">{project.data.description}</p>
+                <div class="tags">
+                    {
+                        project.data.tags.map((tag) => (
+                            <span class="tag">
+                                {tag.icon && (
+                                    <img
+                                        src={tag.icon}
+                                        alt={tag.name}
+                                        width="16"
+                                        height="16"
+                                    />
+                                )}
+                                {tag.name}
+                            </span>
+                        ))
+                    }
+                </div>
+            </header>
+
+            <div class="content">
+                <Content />
+            </div>
+
+            {
+                (project.data.repo || project.data.demo) && (
+                    <footer class="project-links">
+                        {project.data.repo && (
+                            <a
+                                href={project.data.repo}
+                                class="link-button"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {lang === "es"
+                                    ? "Ver repositorio ↗"
+                                    : "View repository ↗"}
+                            </a>
+                        )}
+                        {project.data.demo && (
+                            <a
+                                href={project.data.demo}
+                                class="link-button"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {lang === "es" ? "Ver demo ↗" : "Live demo ↗"}
+                            </a>
+                        )}
+                    </footer>
+                )
+            }
+        </article>
+
+        {
+            (nextProject || prevProject) && (
+                <nav class="project-nav" aria-label="Project navigation">
+                    {prevProject ? (
+                        <a
+                            href={`/${lang}/projects/${slugifyProjectId(prevProject)}`}
+                            class="nav-link nav-prev"
+                        >
+                            <span class="nav-label">
+                                ←{" "}
+                                {lang === "es"
+                                    ? "Anterior proyecto"
+                                    : "Previous project"}
+                            </span>
+                            <span class="nav-title">
+                                {prevProject.data.title}
+                            </span>
+                        </a>
+                    ) : (
+                        <div />
+                    )}
+                    {nextProject ? (
+                        <a
+                            href={`/${lang}/projects/${slugifyProjectId(nextProject)}`}
+                            class="nav-link nav-next"
+                        >
+                            <span class="nav-label">
+                                {lang === "es"
+                                    ? "Siguiente proyecto"
+                                    : "Next project"}{" "}
+                                →
+                            </span>
+                            <span class="nav-title">
+                                {nextProject.data.title}
+                            </span>
+                        </a>
+                    ) : (
+                        <div />
+                    )}
+                </nav>
+            )
+        }
+    </main>
+</Layout>
+
+<style>
+    .project-page {
+        padding: 100px 2rem 4rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: var(--accent-primary);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    .project {
+        padding: 3rem;
+        border-radius: 1.5rem;
+    }
+
+    .project-header {
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .meta {
+        margin-bottom: 0.5rem;
+    }
+
+    .project-number {
+        font-family: var(--font-mono, monospace);
+        font-size: 0.875rem;
+        color: var(--accent-primary);
+        letter-spacing: 0.05em;
+    }
+
+    .project-header h1 {
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+
+    .project-header .lead {
+        color: var(--text-secondary);
+        font-size: 1.15rem;
+        line-height: 1.6;
+        margin: 0 0 1.5rem;
+    }
+
+    .tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        padding: 0.3rem 0.85rem;
+        border-radius: 99rem;
+        background: var(--glass-border);
+        color: var(--text-secondary);
+    }
+
+    .tag img {
+        width: 14px;
+        height: 14px;
+        object-fit: contain;
+    }
+
+    .content :global(h2) {
+        margin-top: 2.5rem;
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .content :global(h3) {
+        margin-top: 2rem;
+        font-size: 1.25rem;
+    }
+
+    .content :global(p) {
+        line-height: 1.8;
+        margin: 1rem 0;
+    }
+
+    .content :global(ul),
+    .content :global(ol) {
+        padding-left: 1.5rem;
+        line-height: 1.8;
+    }
+
+    .content :global(code) {
+        font-family: var(--font-mono, monospace);
+        font-size: 0.9em;
+        background: var(--glass-border);
+        padding: 0.1rem 0.4rem;
+        border-radius: 0.25rem;
+    }
+
+    .content :global(pre) {
+        background: var(--glass-border);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+    }
+
+    .content :global(pre code) {
+        background: transparent;
+        padding: 0;
+    }
+
+    .content :global(a) {
+        color: var(--accent-primary);
+    }
+
+    .project-links {
+        margin-top: 2.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--glass-border);
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .link-button {
+        display: inline-block;
+        padding: 0.6rem 1.2rem;
+        background: var(--accent-primary);
+        color: var(--bg-primary);
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 600;
+        transition: opacity 0.2s;
+    }
+
+    .link-button:hover {
+        opacity: 0.85;
+    }
+
+    .project-nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .nav-link {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        padding: 1.25rem;
+        background: var(--glass-border);
+        border: 1px solid var(--glass-border);
+        border-radius: 1rem;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .nav-next {
+        text-align: right;
+    }
+
+    .nav-link:hover {
+        border-color: var(--accent-primary);
+    }
+
+    .nav-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+    }
+
+    .nav-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--accent-primary);
+    }
+
+    @media (max-width: 640px) {
+        .project {
+            padding: 1.5rem;
+        }
+        .project-header h1 {
+            font-size: 1.9rem;
+        }
+        .project-nav {
+            grid-template-columns: 1fr;
+        }
+        .nav-next {
+            text-align: left;
+        }
+    }
+</style>
