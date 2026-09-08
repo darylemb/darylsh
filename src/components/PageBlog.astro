@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { slugifyPostId } from "../lib/blog-ids";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -29,8 +30,8 @@ const posts = (await getCollection("blog"))
                             <span class="tag">#{tag}</span>
                         ))}
                     </div>
-                    <a href={`/${lang}/construction`} class="read-more">
-                        Leer más <span>→</span>
+                    <a href={`/${lang}/blog/${slugifyPostId(post)}`} class="read-more">
+                        {lang === "es" ? "Leer más" : "Read more"} <span>→</span>
                     </a>
                 </article>
             ))
