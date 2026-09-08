@@ -1,0 +1,142 @@
+---
+import Layout from "../../../../layouts/Layout.astro";
+import Navbar from "../../../../components/Navbar.astro";
+import { getAllTagsForLang, getTagCounts } from "../../../../lib/blog";
+import { getLangFromUrl } from "../../../../i18n/utils";
+
+export function getStaticPaths() {
+    return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+
+const lang = getLangFromUrl(Astro.url);
+const tags = await getAllTagsForLang(lang);
+const counts = await getTagCounts(lang);
+---
+
+<Layout
+    title={lang === "es"
+        ? "Tags | Daryl Mendoza · DevOps / SRE"
+        : "Tags | Daryl Mendoza · DevOps / SRE"}
+    description={lang === "es"
+        ? `Explora ${tags.length} temas del blog: Kubernetes, Terraform, AWS, GCP, DevOps, y más.`
+        : `Browse ${tags.length} blog topics: Kubernetes, Terraform, AWS, GCP, DevOps, and more.`}
+>
+    <Navbar />
+    <main class="tags-page container">
+        <a href={`/${lang}/blog`} class="back-link">
+            ← {lang === "es" ? "Volver al blog" : "Back to blog"}
+        </a>
+        <h1>{lang === "es" ? "Tags" : "Tags"}</h1>
+        <p class="subtitle">
+            {lang === "es"
+                ? `Explora posts por tema (${tags.length} ${tags.length === 1 ? "tag" : "tags"})`
+                : `Browse posts by topic (${tags.length} ${tags.length === 1 ? "tag" : "tags"})`}
+        </p>
+        {
+            tags.length === 0 ? (
+                <div class="empty-state glass">
+                    <p>
+                        {lang === "es"
+                            ? "Aún no hay posts con tags."
+                            : "No tagged posts yet."}
+                    </p>
+                </div>
+            ) : (
+                <ul class="tag-list">
+                    {tags.map((tag) => (
+                        <li>
+                            <a
+                                href={`/${lang}/blog?tag=${encodeURIComponent(tag)}`}
+                                class="tag-pill outline"
+                            >
+                                <span class="tag-name">#{tag}</span>
+                                <span class="count">({counts[tag] ?? 0})</span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )
+        }
+    </main>
+</Layout>
+
+<style>
+    .tags-page {
+        padding: 100px 2rem 4rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: var(--accent-primary);
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .subtitle {
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+        font-size: 1.05rem;
+    }
+
+    .tag-list {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .tag-list li {
+        display: inline-block;
+    }
+
+    .tag-pill {
+        padding: 0.5rem 1.25rem;
+        border: 1px solid var(--glass-border);
+        border-radius: 99rem;
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .tag-pill:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+    }
+
+    .tag-name {
+        font-weight: 500;
+    }
+
+    .count {
+        color: var(--text-tertiary);
+        font-size: 0.85em;
+        font-family: var(--font-mono, monospace);
+    }
+
+    .empty-state {
+        padding: 4rem 2rem;
+        text-align: center;
+        border-radius: 1.5rem;
+    }
+
+    .empty-state p {
+        color: var(--text-secondary);
+    }
+</style>
